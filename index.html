@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyBlue Shop - Your Online Store</title>
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f8ff; /* Sky blue background */
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #87ceeb; /* Sky blue header */
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1e3a8a; /* Dark blue */
+        }
+        
+        .logo span {
+            color: #e74c3c;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            color: #1e3a8a; /* Dark blue */
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        /* Cart Preview */
+        .cart-preview {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 300px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 1rem;
+            display: none;
+            z-index: 101;
+            color: #333;
+            border: 1px solid #87ceeb;
+        }
+        
+        .cart-icon:hover .cart-preview {
+            display: block;
+        }
+        
+        .cart-preview-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-preview-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-preview-item img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+        
+        .cart-preview-total {
+            font-weight: bold;
+            margin-top: 0.5rem;
+            text-align: right;
+            color: #1e3a8a;
+        }
+        
+        .view-cart-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .view-cart-btn:hover {
+            background-color: #1e3a8a;
+            opacity: 0.9;
+        }
+        
+        /* Discount Banner */
+        .discount-banner {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 0.8rem 0;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+        }
+        
+        .discount-banner .close-banner {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(135, 206, 235, 0.7), rgba(135, 206, 235, 0.7)), url('https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1e3a8a;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #1e3a8a;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #142d6b;
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 4rem 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title p {
+            color: #666;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 1px solid #d4e6f1;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.2);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            background-color: #f0f8ff;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+            padding: 1rem;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1e3a8a;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+        
+        .product-options {
+            margin-bottom: 1rem;
+        }
+        
+        .option-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .option-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d4e6f1;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            background-color: #f8fbfe;
+        }
+        
+        .add-to-cart {
+            width: 100%;
+            padding: 0.7rem;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #142d6b;
+        }
+        
+        /* Cart Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            width: 80%;
+            max-width: 800px;
+            max-height: 80vh;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #1e3a8a;
+        }
+        
+        .modal-header {
+            padding: 1rem;
+            background-color: #1e3a8a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 1rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .cart-items {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .cart-items th {
+            text-align: left;
+            padding: 0.5rem;
+            border-bottom: 2px solid #d4e6f1;
+            color: #1e3a8a;
+        }
+        
+        .cart-items td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #d4e6f1;
+        }
+        
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        
+        .remove-item {
+            color: #e74c3c;
+            cursor: pointer;
+        }
+        
+        .discount-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border: 1px solid #d4e6f1;
+        }
+        
+        .coupon-input {
+            padding: 0.5rem;
+            border: 1px solid #d4e6f1;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+            width: 200px;
+        }
+        
+        .apply-coupon {
+            padding: 0.5rem 1rem;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .apply-coupon:hover {
+            background-color: #142d6b;
+        }
+        
+        .modal-footer {
+            padding: 1rem;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #d4e6f1;
+        }
+        
+        .cart-totals {
+            text-align: right;
+        }
+        
+        .cart-subtotal, .cart-discount, .cart-total {
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+        
+        .checkout-btn {
+            padding: 0.7rem 1.5rem;
+        }
+        
+        /* Categories Section */
+        .categories {
+            padding: 3rem 0;
+            background-color: #f0f8ff;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+            padding: 1.5rem;
+            border: 1px solid #d4e6f1;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.2);
+        }
+        
+        .category-icon {
+            font-size: 2.5rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+        
+        .category-title {
+            font-size: 1.2rem;
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Newsletter Section */
+        .newsletter {
+            padding: 3rem 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-input {
+            padding: 0.8rem;
+            border: 1px solid #d4e6f1;
+            border-radius: 4px 0 0 4px;
+            width: 70%;
+        }
+        
+        .newsletter-btn {
+            padding: 0.8rem 1.5rem;
+            background-color: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-btn:hover {
+            background-color: #142d6b;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #87ceeb;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #87ceeb;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #87ceeb;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+            }
+            
+            .cart-preview {
+                width: 250px;
+                right: -50px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-input {
+                width: 100%;
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+            }
+            
+            .newsletter-btn {
+                border-radius: 4px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Sky<span>Blue</span> Shop</div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#categories">Categories</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li>
+                            <div class="cart-icon" id="cartIcon">
+                                🛒
+                                <span class="cart-count" id="cartCount">0</span>
+                                <div class="cart-preview" id="cartPreview">
+                                    <div id="previewItems">
+                                        <!-- Cart preview items will be added here -->
+                                        <p>Your cart is empty</p>
+                                    </div>
+                                    <div class="cart-preview-total" id="previewTotal" style="display: none;">
+                                        Total: $<span>0.00</span>
+                                    </div>
+                                    <a href="#" class="view-cart-btn" id="viewCartBtn" style="display: none;">View Cart</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Discount Banner -->
+    <div class="discount-banner" id="discountBanner">
+        🎉 Summer Sale! Get 20% off on all products with code: SUMMER20 🎉
+        <span class="close-banner" id="closeBanner">×</span>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome to SkyBlue Shop</h1>
+                <p>Discover amazing products with our summer collection</p>
+                <a href="#products" class="btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Shop by Category</h2>
+                <p>Browse our wide range of products</p>
+            </div>
+            
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">📱</div>
+                    <h3 class="category-title">Electronics</h3>
+                    <p>Smartphones, Laptops & more</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">👕</div>
+                    <h3 class="category-title">Fashion</h3>
+                    <p>Clothing & Accessories</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🏠</div>
+                    <h3 class="category-title">Home</h3>
+                    <p>Furniture & Decor</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">💄</div>
+                    <h3 class="category-title">Beauty</h3>
+                    <p>Cosmetics & Skincare</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">⚽</div>
+                    <h3 class="category-title">Sports</h3>
+                    <p>Fitness & Outdoor</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Featured Products</h2>
+                <p>Our best selling items this season</p>
+            </div>
+            
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-badge">20% OFF</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Smartphone">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Galaxy S22 Ultra</h3>
+                        <p class="product-price">
+                            <span class="original-price">$1,199.99</span>
+                            $959.99
+                        </p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Color:</label>
+                            <select class="option-select" id="color1">
+                                <option value="phantom-black">Phantom Black</option>
+                                <option value="phantom-white">Phantom White</option>
+                                <option value="burgundy">Burgundy</option>
+                            </select>
+                            
+                            <label class="option-label">Storage:</label>
+                            <select class="option-select" id="storage1">
+                                <option value="128gb">128GB</option>
+                                <option value="256gb">256GB</option>
+                                <option value="512gb">512GB</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(1)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-badge">15% OFF</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Laptop">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">MacBook Pro 14"</h3>
+                        <p class="product-price">
+                            <span class="original-price">$1,999.00</span>
+                            $1,699.00
+                        </p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Processor:</label>
+                            <select class="option-select" id="processor2">
+                                <option value="m1-pro">M1 Pro (8-core)</option>
+                                <option value="m1-max">M1 Max (10-core)</option>
+                            </select>
+                            
+                            <label class="option-label">RAM:</label>
+                            <select class="option-select" id="ram2">
+                                <option value="16gb">16GB</option>
+                                <option value="32gb">32GB</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(2)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Headphones">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Sony WH-1000XM4</h3>
+                        <p class="product-price">$349.99</p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Color:</label>
+                            <select class="option-select" id="color3">
+                                <option value="black">Black</option>
+                                <option value="silver">Silver</option>
+                                <option value="blue">Blue</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(3)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-badge">Free Band</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Smartwatch">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Apple Watch Series 7</h3>
+                        <p class="product-price">$399.00</p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Size:</label>
+                            <select class="option-select" id="size4">
+                                <option value="41mm">41mm</option>
+                                <option value="45mm">45mm</option>
+                            </select>
+                            
+                            <label class="option-label">Band:</label>
+                            <select class="option-select" id="band4">
+                                <option value="silicone">Silicone</option>
+                                <option value="leather">Leather</option>
+                                <option value="metal">Stainless Steel</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(4)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-badge">New!</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Camera">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Canon EOS R5</h3>
+                        <p class="product-price">$3,899.00</p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Lens:</label>
+                            <select class="option-select" id="lens5">
+                                <option value="body-only">Body Only</option>
+                                <option value="24-105mm">24-105mm f/4L</option>
+                                <option value="50mm">50mm f/1.2L</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(5)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-badge">Bestseller</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="AirPods">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">AirPods Pro</h3>
+                        <p class="product-price">$249.00</p>
+                        
+                        <button class="add-to-cart" onclick="addToCart(6)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="iPad">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">iPad Pro 12.9"</h3>
+                        <p class="product-price">$1,099.00</p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Storage:</label>
+                            <select class="option-select" id="storage7">
+                                <option value="128gb">128GB</option>
+                                <option value="256gb">256GB</option>
+                                <option value="512gb">512GB</option>
+                            </select>
+                            
+                            <label class="option-label">Cellular:</label>
+                            <select class="option-select" id="cellular7">
+                                <option value="wifi">Wi-Fi Only</option>
+                                <option value="wifi-cellular">Wi-Fi + Cellular</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(7)">Add to Cart</button>
+                    </div>
+                </div>
+                
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-badge">Sale</div>
+                    <div class="product-image">
+                        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" alt="Coffee Maker">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Nespresso Vertuo</h3>
+                        <p class="product-price">
+                            <span class="original-price">$199.00</span>
+                            $179.00
+                        </p>
+                        
+                        <div class="product-options">
+                            <label class="option-label">Color:</label>
+                            <select class="option-select" id="color8">
+                                <option value="black">Black</option>
+                                <option value="red">Red</option>
+                                <option value="silver">Silver</option>
+                            </select>
+                        </div>
+                        
+                        <button class="add-to-cart" onclick="addToCart(8)">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Subscribe to Our Newsletter</h2>
+            <p>Get updates on new products and special offers</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address">
+                <button type="submit" class="newsletter-btn">Subscribe</button>
+            </form>
+        </div>
+    </section>
+    
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Your Shopping Cart</h3>
+                <span class="close-modal" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <table class="cart-items" id="cartTable">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Options</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartItems">
+                        <!-- Cart items will be added here dynamically -->
+                    </tbody>
+                </table>
+                
+                <div class="discount-section">
+                    <h4>Apply Discount Code</h4>
+                    <div>
+                        <input type="text" class="coupon-input" id="couponCode" placeholder="Enter coupon code">
+                        <button class="apply-coupon" onclick="applyCoupon()">Apply</button>
+                    </div>
+                    <p id="couponMessage" style="margin-top: 0.5rem;"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="cart-totals">
+                    <div class="cart-subtotal">
+                        Subtotal: $<span id="cartSubtotal">0.00</span>
+                    </div>
+                    <div class="cart-discount" id="cartDiscount" style="display: none;">
+                        Discount: -$<span id="discountAmount">0.00</span>
+                    </div>
+                    <div class="cart-total">
+                        Total: $<span id="cartTotal">0.00</span>
+                    </div>
+                </div>
+                <button class="btn checkout-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SkyBlue Shop</h3>
+                    <p>Your one-stop shop for all your needs. Quality products at affordable prices.</p>
+                    <div class="social-links">
+                        <a href="#">f</a>
+                        <a href="#">t</a>
+                        <a href="#">i</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="#">All Products</a></li>
+                        <li><a href="#">Featured</a></li>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Sale Items</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Customer Service</h3>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About Us</h3>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 SkyBlue Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Cart functionality
+        let cart = [];
+        let discount = 0;
+        let discountCode = '';
+        const validCoupons = {
+            'SUMMER20': 20,
+            'WELCOME10': 10,
+            'FREESHIP': 5
+        };
+        
+        // Product data
+        const products = {
+            1: {
+                id: 1,
+                name: "Galaxy S22 Ultra",
+                price: 959.99,
+                originalPrice: 1199.99,
+                image: "https://tse1.mm.bing.net/th/id/OIP.XwJ889hbrMie6iA452AivgHaE7?pid=Api&P=0&h=220"
+            },
+            2: {
+                id: 2,
+                name: "MacBook Pro 14\"",
+                price: 1699.00,
+                originalPrice: 1999.00,
+                image: "https://tse4.mm.bing.net/th/id/OIP.3n-YqDRM6mD-8TZntD54LQHaHa?pid=Api&P=0&h=220"
+            },
+            3: {
+                id: 3,
+                name: "Sony WH-1000XM4",
+                price: 349.99,
+                originalPrice: 349.99,
+                image: "https://tse4.mm.bing.net/th/id/OIP.B4ZpRhAkszS_lq1SDFfA9gHaHa?pid=Api&P=0&h=220"
+            },
+            4: {
+                id: 4,
+                name: "Apple Watch Series 7",
+                price: 399.00,
+                originalPrice: 399.00,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+            },
+            5: {
+                id: 5,
+                name: "Canon EOS R5",
+                price: 3899.00,
+                originalPrice: 3899.00,
+                image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+            },
+            6: {
+                id: 6,
+                name: "AirPods Pro",
+                price: 249.00,
+                originalPrice: 249.00,
+                image: "https://tse2.mm.bing.net/th/id/OIP.cQKvy5WpqgLCFPEA6mdq6gHaEK?pid=Api&P=0&h=220"
+            },
+            7: {
+                id: 7,
+                name: "iPad Pro 12.9\"",
+                price: 1099.00,
+                originalPrice: 1099.00,
+                image: "https://tse3.mm.bing.net/th/id/OIP.T9GGXSvYRB1o5W5knU3tiAHaFj?pid=Api&P=0&h=220"
+            },
+            8: {
+                id: 8,
+                name: "Nespresso Vertuo",
+                price: 179.00,
+                originalPrice: 199.00,
+                image: "https://tse3.mm.bing.net/th/id/OIP.Lmb-cXInP0nmCtUeK1eOmwHaHa?pid=Api&P=0&h=220"
+            }
+        };
+        
+        // DOM Elements
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCount = document.getElementById('cartCount');
+        const cartModal = document.getElementById('cartModal');
+        const closeModal = document.getElementById('closeModal');
+        const cartItems = document.getElementById('cartItems');
+        const cartSubtotal = document.getElementById('cartSubtotal');
+        const cartTotal = document.getElementById('cartTotal');
+        const discountBanner = document.getElementById('discountBanner');
+        const closeBanner = document.getElementById('closeBanner');
+        const cartPreview = document.getElementById('cartPreview');
+        const previewItems = document.getElementById('previewItems');
+        const previewTotal = document.getElementById('previewTotal');
+        const viewCartBtn = document.getElementById('viewCartBtn');
+        const cartDiscount = document.getElementById('cartDiscount');
+        const discountAmount = document.getElementById('discountAmount');
+        const couponMessage = document.getElementById('couponMessage');
+        
+        // Event Listeners
+        cartIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            cartModal.style.display = 'flex';
+            updateCartDisplay();
+        });
+        
+        closeModal.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+        
+        closeBanner.addEventListener('click', () => {
+            discountBanner.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.style.display = 'none';
+            }
+        });
+        
+        viewCartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartModal.style.display = 'flex';
+            updateCartDisplay();
+        });
+        
+        // Cart Functions
+        function addToCart(productId) {
+            // Get selected options
+            let options = {};
+            
+            switch(productId) {
+                case 1:
+                    options.color = document.getElementById('color' + productId).value;
+                    options.storage = document.getElementById('storage' + productId).value;
+                    break;
+                case 2:
+                    options.processor = document.getElementById('processor' + productId).value;
+                    options.ram = document.getElementById('ram' + productId).value;
+                    break;
+                case 3:
+                    options.color = document.getElementById('color' + productId).value;
+                    break;
+                case 4:
+                    options.size = document.getElementById('size' + productId).value;
+                    options.band = document.getElementById('band' + productId).value;
+                    break;
+                case 5:
+                    options.lens = document.getElementById('lens' + productId).value;
+                    break;
+                case 7:
+                    options.storage = document.getElementById('storage' + productId).value;
+                    options.cellular = document.getElementById('cellular' + productId).value;
+                    break;
+                case 8:
+                    options.color = document.getElementById('color' + productId).value;
+                    break;
+            }
+            
+            // Check if product already exists in cart with same options
+            const existingItem = cart.find(item => 
+                item.id === productId && 
+                JSON.stringify(item.options) === JSON.stringify(options)
+            );
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: products[productId].name,
+                    price: products[productId].price,
+                    image: products[productId].image,
+                    options: options,
+                    quantity: 1
+                });
+            }
+            
+            updateCartCount();
+            updateCartPreview();
+            showAddToCartFeedback();
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCount();
+            updateCartDisplay();
+            updateCartPreview();
+        }
+        
+        function updateQuantity(index, newQuantity) {
+            if (newQuantity > 0) {
+                cart[index].quantity = newQuantity;
+            } else {
+                cart.splice(index, 1);
+            }
+            updateCartCount();
+            updateCartDisplay();
+            updateCartPreview();
+        }
+        
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+        }
+        
+        function updateCartDisplay() {
+            cartItems.innerHTML = '';
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const optionsText = Object.entries(item.options)
+                    .map(([key, value]) => `${key}: ${value}`)
+                    .join(', ');
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div style="display: flex; align-items: center;">
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                            <span style="margin-left: 10px;">${item.name}</span>
+                        </div>
+                    </td>
+                    <td>${optionsText}</td>
+                    <td>$${item.price.toFixed(2)}</td>
+                    <td>
+                        <input type="number" min="1" value="${item.quantity}" 
+                               onchange="updateQuantity(${index}, parseInt(this.value))" 
+                               style="width: 50px;">
+                    </td>
+                    <td>$${itemTotal.toFixed(2)}</td>
+                    <td>
+                        <span class="remove-item" onclick="removeFromCart(${index})">❌</span>
+                    </td>
+                `;
+                
+                cartItems.appendChild(row);
+            });
+            
+            cartSubtotal.textContent = subtotal.toFixed(2);
+            
+            // Calculate total with discount
+            const discountValue = subtotal * (discount / 100);
+            const total = subtotal - discountValue;
+            
+            if (discount > 0) {
+                cartDiscount.style.display = 'block';
+                discountAmount.textContent = discountValue.toFixed(2);
+                couponMessage.textContent = `Applied discount code: ${discountCode} (${discount}% off)`;
+                couponMessage.style.color = 'green';
+            } else {
+                cartDiscount.style.display = 'none';
+            }
+            
+            cartTotal.textContent = total.toFixed(2);
+        }
+        
+        function updateCartPreview() {
+            previewItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                previewItems.innerHTML = '<p>Your cart is empty</p>';
+                previewTotal.style.display = 'none';
+                viewCartBtn.style.display = 'none';
+                return;
+            }
+            
+            let previewHtml = '';
+            let subtotal = 0;
+            
+            // Show up to 3 items in preview
+            const itemsToShow = cart.slice(0, 3);
+            
+            itemsToShow.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                previewHtml += `
+                    <div class="cart-preview-item">
+                        <div style="display: flex; align-items: center;">
+                            <img src="${item.image}" alt="${item.name}" width="40" height="40">
+                            <span style="margin-left: 10px; font-size: 0.9rem;">${item.name}</span>
+                        </div>
+                        <span style="font-weight: bold;">$${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            });
+            
+            // Show indicator if there are more items
+            if (cart.length > 3) {
+                previewHtml += `<div style="text-align: center; font-size: 0.9rem;">+ ${cart.length - 3} more items</div>`;
+            }
+            
+            previewItems.innerHTML = previewHtml;
+            
+            // Calculate total with discount
+            const discountValue = subtotal * (discount / 100);
+            const total = subtotal - discountValue;
+            
+            previewTotal.querySelector('span').textContent = total.toFixed(2);
+            previewTotal.style.display = 'block';
+            viewCartBtn.style.display = 'block';
+        }
+        
+        function applyCoupon() {
+            const code = document.getElementById('couponCode').value.trim().toUpperCase();
+            
+            if (validCoupons[code]) {
+                discount = validCoupons[code];
+                discountCode = code;
+                updateCartDisplay();
+                updateCartPreview();
+            } else {
+                couponMessage.textContent = 'Invalid coupon code';
+                couponMessage.style.color = 'red';
+                discount = 0;
+                discountCode = '';
+                updateCartDisplay();
+                updateCartPreview();
+            }
+        }
+        
+        function showAddToCartFeedback() {
+            const feedback = document.createElement('div');
+            feedback.textContent = 'Item added to cart!';
+            feedback.style.position = 'fixed';
+            feedback.style.bottom = '20px';
+            feedback.style.right = '20px';
+            feedback.style.backgroundColor = '#1e3a8a';
+            feedback.style.color = 'white';
+            feedback.style.padding = '10px 20px';
+            feedback.style.borderRadius = '5px';
+            feedback.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+            feedback.style.zIndex = '1000';
+            feedback.style.animation = 'fadeInOut 2s ease-in-out';
+            
+            document.body.appendChild(feedback);
+            
+            setTimeout(() => {
+                feedback.style.animation = 'fadeOut 0.5s ease-in-out';
+                setTimeout(() => feedback.remove(), 500);
+            }, 1500);
+            
+            // Add CSS for animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeInOut {
+                    0% { opacity: 0; transform: translateY(20px); }
+                    20% { opacity: 1; transform: translateY(0); }
+                    80% { opacity: 1; transform: translateY(0); }
+                    100% { opacity: 0; transform: translateY(20px); }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    </script>
+</body>
+</html>
